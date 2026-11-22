@@ -1,9 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { connection } from "next/server";
 
 export async function requireAdmin() {
-  await connection();
   const supabase = await createClient();
   const {
     data: { user },
