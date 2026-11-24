@@ -31,7 +31,10 @@ export async function updateSession(request: NextRequest) {
   const isLoggedIn = !!data?.claims;
 
   const path = request.nextUrl.pathname;
-  const isProtected = path.startsWith("/dashboard") || path.startsWith("/admin");
+  const isProtected =
+    path.startsWith("/dashboard") ||
+    path.startsWith("/admin") ||
+    path.startsWith("/book");
 
   if (!isLoggedIn && isProtected) {
     const url = request.nextUrl.clone();
