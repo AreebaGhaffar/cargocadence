@@ -10,8 +10,15 @@ const NETWORK_CODES = new Set([
   "ENOTFOUND",
   "UND_ERR_CONNECT_TIMEOUT",
 ]);
-const FALLBACK_MODEL = process.env.GEMINI_FALLBACK_MODEL;
 const ATTEMPTS_PER_MODEL = 2;
+
+// Comma-separated list, tried in order after the main model
+const FALLBACKS = (
+  process.env.GEMINI_FALLBACK_MODELS ?? process.env.GEMINI_FALLBACK_MODEL ?? ""
+)
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -20,6 +27,11 @@ function statusOf(err: unknown): number | undefined {
     return Number((err as { status: unknown }).status);
   }
   return undefined;
+}
+
+function isDailyQuota(err: unknown): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  return statusOf(err) === 429 && /per[ _-]?day/i.test(message);
 }
 
 function isNetworkError(err: unknown): boolean {
@@ -37,7 +49,7 @@ export class GeminiBusyError extends Error {}
 export async function generateWithRetry(
   params: Omit<GenerateContentParameters, "model">
 ) {
-  const models = [GEMINI_MODEL, ...(FALLBACK_MODEL ? [FALLBACK_MODEL] : [])];
+  const models = [...new Set([GEMINI_MODEL, ...FALLBACKS])];
   let lastErr: unknown;
 
   for (const model of models) {
@@ -46,6 +58,9 @@ export async function generateWithRetry(
         return await ai.models.generateContent({ ...params, model });
       } catch (err) {
         lastErr = err;
+        // Daily quota used up, or model not available: go to the next model now
+        if (isDailyQuota(err) || statusOf(err) === 404) break;
+
         const status = statusOf(err);
         const retryable =
           (status !== undefined && RETRYABLE_STATUS.has(status)) ||
@@ -56,6 +71,6 @@ export async function generateWithRetry(
     }
   }
 
-  console.error("Gemini unavailable after retries:", lastErr);
+  console.error("Gemini unavailable after trying all models:", lastErr);
   throw new GeminiBusyError("Gemini is busy");
 }
