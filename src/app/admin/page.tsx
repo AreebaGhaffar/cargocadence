@@ -12,6 +12,7 @@ export default function AdminHomePage() {
     <main className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Admin Control Panel</h1>
       <Link href="/admin/rates" className="w-fit rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-500">Manage truck rates</Link>
+      <Link href="/admin/bookings" className="w-fit rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-500">View bookings</Link>
       <Suspense fallback={<p>Checking access...</p>}>
         <AdminHome />
       </Suspense>
