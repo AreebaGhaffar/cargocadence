@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { generateWithRetry, GeminiBusyError } from "@/lib/gemini/generate";
 import { createClient } from "@/lib/supabase/server";
-import { ai, GEMINI_MODEL } from "@/lib/gemini/client";
+
 import {
   chatRequestSchema,
   geminiResponseSchema,
@@ -40,8 +41,7 @@ export async function POST(request: NextRequest) {
   const yesterday = new Date(now.getTime() - 86_400_000).toISOString().slice(0, 10);
 
   try {
-    const response = await ai.models.generateContent({
-      model: GEMINI_MODEL,
+    const response = await generateWithRetry({
       contents: parsed.data.messages.map((m) => ({
         role: m.role === "assistant" ? "model" : "user",
         parts: [{ text: m.content }],
@@ -79,8 +79,14 @@ export async function POST(request: NextRequest) {
       !!details.truckType;
 
     return NextResponse.json({ reply, details, customDeal, complete });
-  } catch (err) {
+    } catch (err) {
+    if (err instanceof GeminiBusyError) {
+      return NextResponse.json(
+        { error: "The assistant is busy right now. Please try again in a moment." },
+        { status: 503 }
+      );
+    }
     console.error("Chat request failed:", err);
     return NextResponse.json({ error: "The assistant had a problem. Please try again." }, { status: 502 });
   }
-}
+}  
