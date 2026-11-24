@@ -12,3 +12,15 @@ export const truckTypeSchema = z.object({
   ),
   active: z.boolean(),
 });
+
+export const surchargeSchema = z
+  .object({
+    name: z.string().trim().min(2, "Enter a name").max(60),
+    kind: z.enum(["flat", "percent"]),
+    amount: money,
+    active: z.boolean(),
+  })
+  .refine((d) => d.kind !== "percent" || d.amount <= 100, {
+    message: "A percentage can't be above 100",
+    path: ["amount"],
+  });
