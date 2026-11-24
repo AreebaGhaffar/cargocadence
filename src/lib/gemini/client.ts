@@ -6,5 +6,9 @@ if (!apiKey) {
   throw new Error("GEMINI_API_KEY is not set");
 }
 
-export const ai = new GoogleGenAI({ apiKey });
-export const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
+// Give up on any single request after 20 seconds instead of hanging
+export const ai = new GoogleGenAI({
+  apiKey,
+  httpOptions: { timeout: 20_000 },
+});
+export const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-3.7-flash";

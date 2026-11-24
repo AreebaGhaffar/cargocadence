@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { ai, GEMINI_MODEL } from "@/lib/gemini/client";
+import { generateWithRetry } from "@/lib/gemini/generate";
 
 export async function GET() {
   const supabase = await createClient();
@@ -19,11 +19,10 @@ export async function GET() {
   }
 
   try {
-    const response = await ai.models.generateContent({
-      model: GEMINI_MODEL,
+    const response = await generateWithRetry({
       contents: "Reply with exactly: CargoCadence AI is online",
     });
-    return NextResponse.json({ model: GEMINI_MODEL, text: response.text });
+    return NextResponse.json({ text: response.text });
   } catch (err) {
     console.error("Gemini test failed:", err);
     return NextResponse.json({ error: "Gemini request failed" }, { status: 502 });
