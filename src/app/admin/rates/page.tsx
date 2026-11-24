@@ -31,7 +31,7 @@ async function Surcharges() {
   const supabase = await createClient();
   const { data: surcharges, error } = await supabase
     .from("surcharges")
-    .select("id, name, kind, amount, active")
+    .select("id, name, kind, amount, active, applies_when")
     .order("name");
 
   if (error) return <p className="text-red-400">Could not load surcharges.</p>;

@@ -9,6 +9,7 @@ type Surcharge = {
   kind: "flat" | "percent";
   amount: number;
   active: boolean;
+  applies_when: "always" | "weekend" | "manual";
 };
 
 const inputClass =
@@ -41,6 +42,14 @@ export function SurchargeForm({ surcharge }: { surcharge?: Surcharge }) {
       <label className="text-sm text-neutral-300">
         Amount
         <input name="amount" type="number" step="0.01" min="0" defaultValue={surcharge?.amount} required className={inputClass} />
+      </label>
+      <label className="col-span-2 text-sm text-neutral-300">
+        Applies when
+        <select name="appliesWhen" defaultValue={surcharge?.applies_when ?? "manual"} className={inputClass}>
+          <option value="always">Always (every booking)</option>
+          <option value="weekend">Weekend pickup</option>
+          <option value="manual">Manual (admin adds it)</option>
+        </select>
       </label>
       <label className="flex items-center gap-2 text-sm text-neutral-300">
         <input name="active" type="checkbox" defaultChecked={surcharge ? surcharge.active : true} />

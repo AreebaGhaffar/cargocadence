@@ -77,6 +77,7 @@ function parseSurcharge(formData: FormData) {
     name: formData.get("name"),
     kind: formData.get("kind"),
     amount: formData.get("amount"),
+    appliesWhen: formData.get("appliesWhen"),
     active: formData.get("active") === "on",
   });
 }
@@ -85,6 +86,16 @@ function surchargeError(code?: string) {
   return code === "23505"
     ? "A surcharge with that name already exists"
     : "Could not save. Please try again.";
+}
+
+function toSurchargeRow(d: z.infer<typeof surchargeSchema>) {
+  return {
+    name: d.name,
+    kind: d.kind,
+    amount: d.amount,
+    active: d.active,
+    applies_when: d.appliesWhen,
+  };
 }
 
 export async function createSurcharge(
@@ -96,7 +107,7 @@ export async function createSurcharge(
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
   const supabase = await createClient();
-  const { error } = await supabase.from("surcharges").insert(parsed.data);
+  const { error } = await supabase.from("surcharges").insert(toSurchargeRow(parsed.data));
   if (error) return { error: surchargeError(error.code) };
 
   revalidatePath("/admin/rates");
@@ -117,7 +128,7 @@ export async function updateSurcharge(
   const supabase = await createClient();
   const { error } = await supabase
     .from("surcharges")
-    .update(parsed.data)
+    .update(toSurchargeRow(parsed.data))
     .eq("id", id.data);
   if (error) return { error: surchargeError(error.code) };
 

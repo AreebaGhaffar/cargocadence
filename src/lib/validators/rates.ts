@@ -18,6 +18,7 @@ export const surchargeSchema = z
     name: z.string().trim().min(2, "Enter a name").max(60),
     kind: z.enum(["flat", "percent"]),
     amount: money,
+    appliesWhen: z.enum(["always", "weekend", "manual"]),
     active: z.boolean(),
   })
   .refine((d) => d.kind !== "percent" || d.amount <= 100, {
