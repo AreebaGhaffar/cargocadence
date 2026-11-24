@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { createClient } from "@/lib/supabase/server";
-import { truckTypeSchema } from "@/lib/validators/rates";
+import { surchargeSchema, truckTypeSchema } from "@/lib/validators/rates";
 
 export type RateState = { error?: string; ok?: boolean } | undefined;
 
@@ -67,6 +67,59 @@ export async function updateTruckType(
     .update(toRow(parsed.data))
     .eq("id", id.data);
   if (error) return { error: friendlyError(error.code) };
+
+  revalidatePath("/admin/rates");
+  return { ok: true };
+}
+
+function parseSurcharge(formData: FormData) {
+  return surchargeSchema.safeParse({
+    name: formData.get("name"),
+    kind: formData.get("kind"),
+    amount: formData.get("amount"),
+    active: formData.get("active") === "on",
+  });
+}
+
+function surchargeError(code?: string) {
+  return code === "23505"
+    ? "A surcharge with that name already exists"
+    : "Could not save. Please try again.";
+}
+
+export async function createSurcharge(
+  _prev: RateState,
+  formData: FormData
+): Promise<RateState> {
+  await requireAdmin();
+  const parsed = parseSurcharge(formData);
+  if (!parsed.success) return { error: parsed.error.issues[0].message };
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("surcharges").insert(parsed.data);
+  if (error) return { error: surchargeError(error.code) };
+
+  revalidatePath("/admin/rates");
+  return { ok: true };
+}
+
+export async function updateSurcharge(
+  _prev: RateState,
+  formData: FormData
+): Promise<RateState> {
+  await requireAdmin();
+  const id = z.string().uuid().safeParse(formData.get("id"));
+  if (!id.success) return { error: "Invalid surcharge" };
+
+  const parsed = parseSurcharge(formData);
+  if (!parsed.success) return { error: parsed.error.issues[0].message };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("surcharges")
+    .update(parsed.data)
+    .eq("id", id.data);
+  if (error) return { error: surchargeError(error.code) };
 
   revalidatePath("/admin/rates");
   return { ok: true };
