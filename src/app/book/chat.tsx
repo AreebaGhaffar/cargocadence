@@ -170,8 +170,11 @@ export default function BookingChat() {
             {quote.truckName} · {quote.miles} miles · pickup{" "}
             {new Date(quote.pickupAt).toLocaleString("en-US", {
               timeZone: details?.pickupTimezone ?? undefined,
-              dateStyle: "medium",
-              timeStyle: "short",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
               timeZoneName: "short",
             })}
           </p>
