@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
       cargo_description: d.cargoDescription,
       cargo_weight_lbs: d.cargoWeightLbs,
       pickup_at: quote.pickupAt.toISOString(),
+      pickup_timezone: d.pickupTimezone,
       truck_type_id: quote.truckId,
       distance_miles: quote.miles,
       estimate_breakdown: quote.estimate,

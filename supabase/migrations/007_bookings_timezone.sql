@@ -1,0 +1,1 @@
+alter table public.bookings add column pickup_timezone text;
