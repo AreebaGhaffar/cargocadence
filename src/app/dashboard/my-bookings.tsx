@@ -24,23 +24,30 @@ const STATUS_LABELS: Record<string, { label: string; className: string }> = {
   cancelled: { label: "Cancelled", className: "bg-red-800 text-red-100" },
 };
 
+// Note: dateStyle/timeStyle cannot be combined with timeZoneName,
+// so we use explicit date and time parts instead.
+const PICKUP_FORMAT: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  timeZoneName: "short",
+};
+
 function formatPickup(iso: string, timeZone: string | null): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "Unknown time";
   try {
     return new Intl.DateTimeFormat("en-US", {
-      dateStyle: "medium",
-      timeStyle: "short",
+      ...PICKUP_FORMAT,
       timeZone: timeZone || "UTC",
-      timeZoneName: "short",
     }).format(date);
   } catch {
     // Invalid timezone name: fall back to UTC instead of crashing the page
     return new Intl.DateTimeFormat("en-US", {
-      dateStyle: "medium",
-      timeStyle: "short",
+      ...PICKUP_FORMAT,
       timeZone: "UTC",
-      timeZoneName: "short",
     }).format(date);
   }
 }
