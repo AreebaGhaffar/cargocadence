@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import PayButton from "./pay-button";
 
 type BookingRow = {
   id: string;
@@ -49,6 +50,14 @@ function formatMoney(value: number | string | null): string | null {
   const n = Number(value);
   if (Number.isNaN(n)) return null;
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n);
+}
+
+function isPayable(b: BookingRow): boolean {
+  const hasTotal = b.final_total !== null || b.estimated_total !== null;
+  return (
+    hasTotal &&
+    ((b.status === "quoted" && !b.is_custom_deal) || b.status === "confirmed")
+  );
 }
 
 export default async function MyBookings() {
@@ -119,6 +128,8 @@ export default async function MyBookings() {
                     Note from admin: {b.admin_notes}
                   </p>
                 ) : null}
+
+                {isPayable(b) ? <PayButton bookingId={b.id} /> : null}
               </li>
             );
           })}
