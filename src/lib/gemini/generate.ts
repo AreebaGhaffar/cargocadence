@@ -14,7 +14,7 @@ const ATTEMPTS_PER_MODEL = 2;
 
 // Comma-separated list, tried in order after the main model
 const FALLBACKS = (
-  process.env.GEMINI_FALLBACK_MODELS ?? process.env.GEMINI_FALLBACK_MODEL ?? ""
+  process.env.GEMINI_FALLBACK_MODELS ?? ""
 )
   .split(",")
   .map((s) => s.trim())
