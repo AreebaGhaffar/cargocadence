@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { generateWithRetry, GeminiBusyError } from "@/lib/gemini/generate";
 import { createClient } from "@/lib/supabase/server";
+import { isRateLimited } from "@/lib/rate-limit";
 
 import {
   chatRequestSchema,
@@ -8,6 +9,10 @@ import {
   modelOutputSchema,
 } from "@/lib/ai/booking-schema";
 import { buildSystemPrompt } from "@/lib/ai/system-prompt";
+
+// Per-user limits that protect the Gemini quota
+const MINUTE_LIMIT = 1;
+const DAY_LIMIT = 200;
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
@@ -25,6 +30,18 @@ export async function POST(request: NextRequest) {
   const parsed = chatRequestSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
+
+  // Rate limit before doing any expensive work
+  const limited = await isRateLimited(user.id, [
+    { bucket: "chat-minute", limit: MINUTE_LIMIT, windowSeconds: 60 },
+    { bucket: "chat-day", limit: DAY_LIMIT, windowSeconds: 86_400 },
+  ]);
+  if (limited) {
+    return NextResponse.json(
+      { error: "You are sending messages too quickly. Please wait a minute and try again." },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
   }
 
   const { data: trucks, error: trucksError } = await supabase
@@ -79,7 +96,7 @@ export async function POST(request: NextRequest) {
       !!details.truckType;
 
     return NextResponse.json({ reply, details, customDeal, complete });
-    } catch (err) {
+  } catch (err) {
     if (err instanceof GeminiBusyError) {
       return NextResponse.json(
         { error: "The assistant is busy right now. Please try again in a moment." },
@@ -89,4 +106,4 @@ export async function POST(request: NextRequest) {
     console.error("Chat request failed:", err);
     return NextResponse.json({ error: "The assistant had a problem. Please try again." }, { status: 502 });
   }
-}  
+}
