@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/app/auth/actions";
 import Link from "next/link";
 import MyBookings from "./my-bookings";
+import SupportInfo from "@/components/support-info";
 
 async function UserInfo() {
   const supabase = await createClient();
@@ -37,6 +38,9 @@ export default function DashboardPage() {
       </Suspense>
       <Suspense fallback={<p>Loading your bookings...</p>}>
         <MyBookings />
+      </Suspense>
+      <Suspense fallback={null}>
+        <SupportInfo variant="card" />
       </Suspense>
     </main>
   );
