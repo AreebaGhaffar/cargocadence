@@ -11,7 +11,7 @@ import {
 import { buildSystemPrompt } from "@/lib/ai/system-prompt";
 
 // Per-user limits that protect the Gemini quota
-const MINUTE_LIMIT = 1;
+const MINUTE_LIMIT = 10;
 const DAY_LIMIT = 200;
 
 export async function POST(request: NextRequest) {
