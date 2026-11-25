@@ -18,6 +18,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   /* config options here */
   turbopack: {
     rules: {
