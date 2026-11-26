@@ -97,7 +97,7 @@ export default function SettingsForm({ values }: { values: SettingsValues }) {
         <button
           type="submit"
           disabled={pending}
-          className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-500 disabled:opacity-50"
+          className="rounded-lg bg-slate-900 px-4 py-2 font-semibold text-white hover:bg-slate-700 disabled:opacity-50"
         >
           {pending ? "Saving..." : "Save settings"}
         </button>

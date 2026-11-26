@@ -14,29 +14,35 @@ async function UserInfo() {
   if (!user) redirect("/login");
 
   return (
-    <>
-      <p>Logged in as {user.email}</p>
+    <div className="flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+      <p className="text-sm text-gray-700">
+        Logged in as <span className="font-semibold text-slate-900">{user.email}</span>
+      </p>
       <form action={logout}>
-        <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 hover:bg-gray-100">Log out</button>
+        <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 hover:bg-gray-100">
+          Log out
+        </button>
       </form>
-    </>
+    </div>
   );
 }
 
 export default function DashboardPage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-4 p-6">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      <Link
-        href="/book"
-        className="w-fit rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-500"
-      >
-        Book a truck
-      </Link>
-      <Suspense fallback={<p>Loading...</p>}>
+    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-4 p-6">
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+        <Link
+          href="/book"
+          className="rounded-lg bg-slate-900 px-4 py-2 font-semibold text-white shadow-sm hover:bg-slate-700"
+        >
+          Book a truck
+        </Link>
+      </div>
+      <Suspense fallback={<p className="text-gray-600">Loading...</p>}>
         <UserInfo />
       </Suspense>
-      <Suspense fallback={<p>Loading your bookings...</p>}>
+      <Suspense fallback={<p className="text-gray-600">Loading your bookings...</p>}>
         <MyBookings />
       </Suspense>
       <Suspense fallback={null}>

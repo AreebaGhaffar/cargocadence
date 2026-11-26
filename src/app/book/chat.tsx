@@ -149,7 +149,7 @@ export default function BookingChat() {
             key={i}
             className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2 text-sm ${
               m.role === "user"
-                ? "self-end bg-blue-600 text-white"
+                ? "self-end bg-slate-900 text-white"
                 : "self-start bg-gray-100 text-gray-900"
             }`}
           >
@@ -199,7 +199,7 @@ export default function BookingChat() {
           <button
             onClick={confirmBooking}
             disabled={saving}
-            className="mt-4 w-full rounded-lg bg-blue-600 py-2.5 font-semibold text-white transition hover:bg-blue-500 disabled:opacity-50"
+            className="mt-4 w-full rounded-lg bg-slate-900 py-2.5 font-semibold text-white transition hover:bg-slate-700 disabled:opacity-50"
           >
             {saving
               ? "Saving..."
@@ -227,7 +227,7 @@ export default function BookingChat() {
           <div className="mt-4 flex gap-3">
             <button
               onClick={startOver}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
             >
               New booking
             </button>
@@ -259,7 +259,7 @@ export default function BookingChat() {
           />
           <button
             disabled={loading || atLimit || !input.trim()}
-            className="rounded-lg bg-blue-600 px-5 font-semibold text-white transition hover:bg-blue-500 disabled:opacity-50"
+            className="rounded-lg bg-slate-900 px-5 font-semibold text-white transition hover:bg-slate-700 disabled:opacity-50"
           >
             Send
           </button>

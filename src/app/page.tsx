@@ -3,9 +3,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 
 const primaryButton =
-  "rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-500";
+  "rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm hover:bg-slate-700";
 const secondaryButton =
-  "rounded-lg border border-gray-300 px-6 py-3 font-semibold text-gray-800 hover:bg-gray-100";
+  "rounded-lg border border-gray-300 bg-white px-6 py-3 font-semibold text-gray-800 hover:bg-gray-100";
 
 function GuestButtons() {
   return (
@@ -76,51 +76,61 @@ const FEATURES = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-16">
-      <section className="flex flex-col items-start gap-6">
-        <p className="rounded-full border border-gray-300 px-3 py-1 text-sm text-gray-600">
-          Freight booking across the USA
-        </p>
-        <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">
-          Book a truck in minutes, not phone calls.
-        </h1>
-        <p className="max-w-2xl text-lg text-gray-600">
-          CargoCadence uses an AI assistant to take your pickup and delivery details,
-          quote a fair price instantly, and keep your booking moving from request to pickup.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Suspense fallback={<GuestButtons />}>
-            <HeroButtons />
-          </Suspense>
+    <main className="flex w-full flex-col">
+      <section className="border-b border-gray-200 bg-gradient-to-b from-gray-50 to-white">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-start gap-6 px-6 py-20">
+          <p className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-sm font-medium text-amber-800">
+            Freight booking across the USA
+          </p>
+          <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
+            Book a truck in minutes, not phone calls.
+          </h1>
+          <p className="max-w-2xl text-lg text-gray-600">
+            CargoCadence uses an AI assistant to take your pickup and delivery details,
+            quote a fair price instantly, and keep your booking moving from request to pickup.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Suspense fallback={<GuestButtons />}>
+              <HeroButtons />
+            </Suspense>
+          </div>
         </div>
       </section>
 
-      <section className="flex flex-col gap-6">
-        <h2 className="text-2xl font-semibold">How it works</h2>
-        <ol className="grid gap-4 sm:grid-cols-3">
-          {STEPS.map((step, index) => (
-            <li key={step.title} className="rounded-lg border border-gray-300 p-5">
-              <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
-                {index + 1}
-              </span>
-              <h3 className="mb-1 font-semibold">{step.title}</h3>
-              <p className="text-sm text-gray-600">{step.text}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-16">
+        <section className="flex flex-col gap-6">
+          <h2 className="text-2xl font-semibold text-slate-900">How it works</h2>
+          <ol className="grid gap-4 sm:grid-cols-3">
+            {STEPS.map((step, index) => (
+              <li
+                key={step.title}
+                className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+              >
+                <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-amber-400 font-bold text-slate-900">
+                  {index + 1}
+                </span>
+                <h3 className="mb-1 font-semibold text-slate-900">{step.title}</h3>
+                <p className="text-sm text-gray-600">{step.text}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-      <section className="flex flex-col gap-6">
-        <h2 className="text-2xl font-semibold">Why CargoCadence</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {FEATURES.map((feature) => (
-            <div key={feature.title} className="rounded-lg border border-gray-300 p-5">
-              <h3 className="mb-1 font-semibold">{feature.title}</h3>
-              <p className="text-sm text-gray-600">{feature.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+        <section className="flex flex-col gap-6">
+          <h2 className="text-2xl font-semibold text-slate-900">Why CargoCadence</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {FEATURES.map((feature) => (
+              <div
+                key={feature.title}
+                className="rounded-xl border border-gray-200 border-l-4 border-l-amber-400 bg-white p-5 shadow-sm"
+              >
+                <h3 className="mb-1 font-semibold text-slate-900">{feature.title}</h3>
+                <p className="text-sm text-gray-600">{feature.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
