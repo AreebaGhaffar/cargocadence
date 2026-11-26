@@ -13,7 +13,7 @@ type Surcharge = {
 };
 
 const inputClass =
-  "mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white outline-none focus:border-blue-500";
+  "mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:border-blue-500";
 
 export function SurchargeForm({ surcharge }: { surcharge?: Surcharge }) {
   const [state, formAction, pending] = useActionState(
@@ -24,26 +24,26 @@ export function SurchargeForm({ surcharge }: { surcharge?: Surcharge }) {
   return (
     <form
       action={formAction}
-      className="grid grid-cols-2 gap-3 rounded-xl border border-neutral-800 bg-neutral-900 p-4 md:grid-cols-4"
+      className="grid grid-cols-2 gap-3 rounded-xl border border-gray-200 bg-white p-4 md:grid-cols-4"
     >
       {surcharge && <input type="hidden" name="id" value={surcharge.id} />}
 
-      <label className="col-span-2 text-sm text-neutral-300">
+      <label className="col-span-2 text-sm text-gray-700">
         Name
         <input name="name" defaultValue={surcharge?.name} required className={inputClass} />
       </label>
-      <label className="text-sm text-neutral-300">
+      <label className="text-sm text-gray-700">
         Type
         <select name="kind" defaultValue={surcharge?.kind ?? "flat"} className={inputClass}>
           <option value="flat">Flat ($)</option>
           <option value="percent">Percent (%)</option>
         </select>
       </label>
-      <label className="text-sm text-neutral-300">
+      <label className="text-sm text-gray-700">
         Amount
         <input name="amount" type="number" step="0.01" min="0" defaultValue={surcharge?.amount} required className={inputClass} />
       </label>
-      <label className="col-span-2 text-sm text-neutral-300">
+      <label className="col-span-2 text-sm text-gray-700">
         Applies when
         <select name="appliesWhen" defaultValue={surcharge?.applies_when ?? "manual"} className={inputClass}>
           <option value="always">Always (every booking)</option>
@@ -51,7 +51,7 @@ export function SurchargeForm({ surcharge }: { surcharge?: Surcharge }) {
           <option value="manual">Manual (admin adds it)</option>
         </select>
       </label>
-      <label className="flex items-center gap-2 text-sm text-neutral-300">
+      <label className="flex items-center gap-2 text-sm text-gray-700">
         <input name="active" type="checkbox" defaultChecked={surcharge ? surcharge.active : true} />
         Active
       </label>
@@ -63,10 +63,10 @@ export function SurchargeForm({ surcharge }: { surcharge?: Surcharge }) {
       </button>
 
       {state?.error && (
-        <p className="col-span-full rounded-lg bg-red-500/10 p-2 text-sm text-red-400">{state.error}</p>
+        <p className="col-span-full rounded-lg bg-red-500/10 p-2 text-sm text-red-600">{state.error}</p>
       )}
       {state?.ok && (
-        <p className="col-span-full rounded-lg bg-green-500/10 p-2 text-sm text-green-400">Saved</p>
+        <p className="col-span-full rounded-lg bg-green-500/10 p-2 text-sm text-green-700">Saved</p>
       )}
     </form>
   );

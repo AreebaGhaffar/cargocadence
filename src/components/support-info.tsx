@@ -50,7 +50,7 @@ export default async function SupportInfo({
       {s.support_email ? (
         <li>
           Email:{" "}
-          <a className="text-blue-400 hover:underline" href={`mailto:${s.support_email}`}>
+          <a className="text-blue-600 hover:underline" href={`mailto:${s.support_email}`}>
             {s.support_email}
           </a>
         </li>
@@ -58,7 +58,7 @@ export default async function SupportInfo({
       {s.support_phone ? (
         <li>
           Phone:{" "}
-          <a className="text-blue-400 hover:underline" href={phoneHref(s.support_phone)}>
+          <a className="text-blue-600 hover:underline" href={phoneHref(s.support_phone)}>
             {s.support_phone}
           </a>
         </li>
@@ -68,7 +68,7 @@ export default async function SupportInfo({
           WhatsApp:{" "}
           {whatsapp ? (
             <a
-              className="text-blue-400 hover:underline"
+              className="text-blue-600 hover:underline"
               href={whatsapp}
               target="_blank"
               rel="noopener noreferrer"
@@ -88,7 +88,7 @@ export default async function SupportInfo({
   if (variant === "card") {
     if (!hasContact) return null;
     return (
-      <section className="rounded-lg border border-gray-700 p-4">
+      <section className="rounded-lg border border-gray-300 p-4">
         <h2 className="mb-2 text-lg font-semibold">Need help?</h2>
         {items}
       </section>
@@ -96,9 +96,9 @@ export default async function SupportInfo({
   }
 
   return (
-    <footer className="mt-8 border-t border-gray-800 px-6 py-6 text-gray-400">
+    <footer className="mt-8 border-t border-gray-200 px-6 py-6 text-gray-600">
       <div className="mx-auto flex max-w-5xl flex-col gap-3">
-        <p className="font-semibold text-gray-200">{s.company_name}</p>
+        <p className="font-semibold text-gray-900">{s.company_name}</p>
         {hasContact ? items : null}
         <p className="text-xs text-gray-500">
           © {new Date().getFullYear()} {s.company_name}. All rights reserved.

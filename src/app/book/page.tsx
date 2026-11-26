@@ -8,7 +8,7 @@ export default function BookPage() {
         ← Back to dashboard
       </Link>
       <p className="mt-4 text-sm font-semibold tracking-wide text-blue-500">CARGOCADENCE</p>
-      <h1 className="mb-4 text-2xl font-bold text-white">Book a truck</h1>
+      <h1 className="mb-4 text-2xl font-bold text-gray-900">Book a truck</h1>
       <BookingChat />
     </main>
   );

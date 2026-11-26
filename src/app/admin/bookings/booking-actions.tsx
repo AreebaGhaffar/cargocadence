@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { approveBooking, cancelBooking } from "./actions";
 
 const inputClass =
-  "mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white outline-none focus:border-blue-500";
+  "mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:border-blue-500";
 
 export function BookingActions({
   id,
@@ -18,11 +18,11 @@ export function BookingActions({
   const [state, formAction, pending] = useActionState(approveBooking, undefined);
 
   return (
-    <div className="mt-4 flex flex-col gap-3 border-t border-neutral-800 pt-4">
+    <div className="mt-4 flex flex-col gap-3 border-t border-gray-200 pt-4">
       {status === "pending_approval" && (
         <form action={formAction} className="grid gap-3 md:grid-cols-3">
           <input type="hidden" name="id" value={id} />
-          <label className="text-sm text-neutral-300">
+          <label className="text-sm text-gray-700">
             Final total ($)
             <input
               name="finalTotal"
@@ -34,7 +34,7 @@ export function BookingActions({
               className={inputClass}
             />
           </label>
-          <label className="text-sm text-neutral-300 md:col-span-2">
+          <label className="text-sm text-gray-700 md:col-span-2">
             Note for the customer (optional)
             <input name="adminNotes" maxLength={500} className={inputClass} />
           </label>
@@ -45,7 +45,7 @@ export function BookingActions({
             {pending ? "Approving..." : "Approve deal"}
           </button>
           {state?.error && (
-            <p className="rounded-lg bg-red-500/10 p-2 text-sm text-red-400 md:col-span-3">
+            <p className="rounded-lg bg-red-500/10 p-2 text-sm text-red-600 md:col-span-3">
               {state.error}
             </p>
           )}
@@ -60,7 +60,7 @@ export function BookingActions({
           }}
         >
           <input type="hidden" name="id" value={id} />
-          <button className="rounded-lg bg-neutral-800 px-4 py-2 text-sm text-red-400 hover:bg-neutral-700">
+          <button className="rounded-lg ">
             Cancel booking
           </button>
         </form>

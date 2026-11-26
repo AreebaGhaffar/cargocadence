@@ -18,7 +18,7 @@ async function SettingsLoader() {
 
   if (error || !data) {
     return (
-      <p className="text-red-400">
+      <p className="text-red-600">
         Could not load settings. Check that migration 009 was run.
       </p>
     );
@@ -33,11 +33,11 @@ async function SettingsLoader() {
 export default function AdminSettingsPage() {
   return (
     <main className="flex flex-col gap-4">
-      <Link href="/admin" className="w-fit text-sm text-blue-400 hover:underline">
+      <Link href="/admin" className="w-fit text-sm text-blue-600 hover:underline">
         ← Admin home
       </Link>
       <h1 className="text-2xl font-bold">Contact details and support channels</h1>
-      <p className="text-gray-400">
+      <p className="text-gray-600">
         These details are shown to customers in the site footer and on their dashboard.
         Leave a field empty to hide it.
       </p>

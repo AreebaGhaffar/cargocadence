@@ -15,7 +15,7 @@ export type SettingsValues = {
 const INITIAL_STATE: SettingsState = { ok: false, message: "", errors: {} };
 
 const inputClass =
-  "w-full rounded border border-gray-600 bg-gray-900 px-3 py-2 text-white placeholder-gray-500";
+  "w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400";
 
 export default function SettingsForm({ values }: { values: SettingsValues }) {
   const [state, formAction, pending] = useActionState(updateSettings, INITIAL_STATE);
@@ -35,7 +35,7 @@ export default function SettingsForm({ values }: { values: SettingsValues }) {
   }) {
     return (
       <label className="flex flex-col gap-1">
-        <span className="text-sm text-gray-300">{label}</span>
+        <span className="text-sm text-gray-700">{label}</span>
         {multiline ? (
           <textarea
             name={name}
@@ -53,7 +53,7 @@ export default function SettingsForm({ values }: { values: SettingsValues }) {
           />
         )}
         {state.errors[name] ? (
-          <span className="text-sm text-red-400">{state.errors[name]}</span>
+          <span className="text-sm text-red-600">{state.errors[name]}</span>
         ) : null}
       </label>
     );
@@ -102,7 +102,7 @@ export default function SettingsForm({ values }: { values: SettingsValues }) {
           {pending ? "Saving..." : "Save settings"}
         </button>
         {state.message ? (
-          <span className={state.ok ? "text-green-400" : "text-red-400"}>
+          <span className={state.ok ? "text-green-700" : "text-red-600"}>
             {state.message}
           </span>
         ) : null}

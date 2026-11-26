@@ -13,7 +13,7 @@ async function TruckTypes() {
     .select("id, name, base_fee, rate_per_mile, max_weight_lbs, active")
     .order("name");
 
-  if (error) return <p className="text-red-400">Could not load truck types.</p>;
+  if (error) return <p className="text-red-600">Could not load truck types.</p>;
 
   return (
     <div className="flex flex-col gap-4">
@@ -34,7 +34,7 @@ async function Surcharges() {
     .select("id, name, kind, amount, active, applies_when")
     .order("name");
 
-  if (error) return <p className="text-red-400">Could not load surcharges.</p>;
+  if (error) return <p className="text-red-600">Could not load surcharges.</p>;
 
   return (
     <div className="flex flex-col gap-4">

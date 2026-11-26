@@ -37,7 +37,7 @@ export default function PayButton({ bookingId }: { bookingId: string }) {
       >
         {loading ? "Redirecting..." : "Pay now"}
       </button>
-      {error ? <p className="mt-1 text-sm text-red-400">{error}</p> : null}
+      {error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null}
     </div>
   );
 }

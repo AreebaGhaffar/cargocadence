@@ -17,7 +17,7 @@ async function UserInfo() {
     <>
       <p>Logged in as {user.email}</p>
       <form action={logout}>
-        <button className="rounded bg-gray-700 px-4 py-2 text-white">Log out</button>
+        <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 hover:bg-gray-100">Log out</button>
       </form>
     </>
   );

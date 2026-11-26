@@ -69,7 +69,7 @@ async function PaymentsLedger() {
     .limit(200);
 
   if (error) {
-    return <p className="text-red-400">Could not load payments: {error.message}</p>;
+    return <p className="text-red-600">Could not load payments: {error.message}</p>;
   }
 
   const payments = (data ?? []) as unknown as PaymentRow[];
@@ -94,23 +94,23 @@ async function PaymentsLedger() {
 
   return (
     <>
-      <div className="flex flex-wrap gap-6 rounded-lg border border-gray-700 p-4">
+      <div className="flex flex-wrap gap-6 rounded-lg border border-gray-300 p-4">
         <div>
-          <p className="text-sm text-gray-400">Total collected</p>
+          <p className="text-sm text-gray-600">Total collected</p>
           <p className="text-2xl font-bold">{formatMoney(totalCents / 100)}</p>
         </div>
         <div>
-          <p className="text-sm text-gray-400">Payments</p>
+          <p className="text-sm text-gray-600">Payments</p>
           <p className="text-2xl font-bold">{payments.length}</p>
         </div>
       </div>
 
       {payments.length === 0 ? (
-        <p className="text-gray-400">No payments recorded yet.</p>
+        <p className="text-gray-600">No payments recorded yet.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-gray-700 text-gray-400">
+            <thead className="border-b border-gray-300 text-gray-600">
               <tr>
                 <th className="py-2 pr-4">Date</th>
                 <th className="py-2 pr-4">Customer</th>
@@ -125,7 +125,7 @@ async function PaymentsLedger() {
               {payments.map((p) => {
                 const booking = firstBooking(p.bookings);
                 return (
-                  <tr key={p.id} className="border-b border-gray-800 align-top">
+                  <tr key={p.id} className="border-b border-gray-200 align-top">
                     <td className="py-2 pr-4 whitespace-nowrap">{formatDate(p.created_at)}</td>
                     <td className="py-2 pr-4">
                       {names.get(p.user_id) ?? `${p.user_id.slice(0, 8)}…`}
@@ -157,7 +157,7 @@ async function PaymentsLedger() {
 export default function AdminPaymentsPage() {
   return (
     <main className="flex flex-col gap-4">
-      <Link href="/admin" className="w-fit text-sm text-blue-400 hover:underline">
+      <Link href="/admin" className="w-fit text-sm text-blue-600 hover:underline">
         ← Admin home
       </Link>
       <h1 className="text-2xl font-bold">Payments ledger</h1>

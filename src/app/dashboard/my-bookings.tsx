@@ -16,12 +16,12 @@ type BookingRow = {
 };
 
 const STATUS_LABELS: Record<string, { label: string; className: string }> = {
-  quoted: { label: "Quoted", className: "bg-gray-700 text-gray-100" },
-  pending_approval: { label: "Awaiting approval", className: "bg-yellow-700 text-yellow-100" },
-  confirmed: { label: "Confirmed", className: "bg-blue-700 text-blue-100" },
-  paid: { label: "Paid", className: "bg-green-700 text-green-100" },
-  completed: { label: "Completed", className: "bg-green-900 text-green-100" },
-  cancelled: { label: "Cancelled", className: "bg-red-800 text-red-100" },
+  quoted: { label: "Quoted", className: "bg-gray-100 text-gray-800" },
+  pending_approval: { label: "Awaiting approval", className: "" },
+  confirmed: { label: "Confirmed", className: "bg-blue-100 text-blue-800" },
+  paid: { label: "Paid", className: "bg-green-100 text-green-800" },
+  completed: { label: "Completed", className: "bg-green-200 text-green-900" },
+  cancelled: { label: "Cancelled", className: "bg-red-200 text-red-900" },
 };
 
 // Note: dateStyle/timeStyle cannot be combined with timeZoneName,
@@ -84,7 +84,7 @@ export default async function MyBookings() {
     .limit(20);
 
   if (error) {
-    return <p className="text-red-400">Could not load your bookings. Please refresh.</p>;
+    return <p className="text-red-600">Could not load your bookings. Please refresh.</p>;
   }
 
   const bookings = (data ?? []) as BookingRow[];
@@ -94,19 +94,19 @@ export default async function MyBookings() {
       <h2 className="text-xl font-semibold">My bookings</h2>
 
       {bookings.length === 0 ? (
-        <p className="text-gray-400">You have no bookings yet. Use “Book a truck” to get started.</p>
+        <p className="text-gray-600">You have no bookings yet. Use “Book a truck” to get started.</p>
       ) : (
         <ul className="flex flex-col gap-3">
           {bookings.map((b) => {
             const status = STATUS_LABELS[b.status] ?? {
               label: b.status,
-              className: "bg-gray-700 text-gray-100",
+              className: "bg-gray-100 text-gray-800",
             };
             const finalTotal = formatMoney(b.final_total);
             const estimate = formatMoney(b.estimated_total);
 
             return (
-              <li key={b.id} className="rounded-lg border border-gray-700 p-4">
+              <li key={b.id} className="rounded-lg border border-gray-300 p-4">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-medium">
                     {b.pickup_location} → {b.dropoff_location}
@@ -116,7 +116,7 @@ export default async function MyBookings() {
                   </span>
                 </div>
 
-                <p className="mt-1 text-sm text-gray-400">
+                <p className="mt-1 text-sm text-gray-600">
                   Pickup: {formatPickup(b.pickup_at, b.pickup_timezone)}
                 </p>
 
@@ -131,7 +131,7 @@ export default async function MyBookings() {
                 </p>
 
                 {b.admin_notes ? (
-                  <p className="mt-2 rounded bg-gray-800 p-2 text-sm text-gray-300">
+                  <p className="mt-2 rounded bg-gray-100 p-2 text-sm text-gray-700">
                     Note from admin: {b.admin_notes}
                   </p>
                 ) : null}

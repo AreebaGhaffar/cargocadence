@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 const primaryButton =
   "rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-500";
 const secondaryButton =
-  "rounded-lg border border-gray-600 px-6 py-3 font-semibold text-gray-200 hover:bg-gray-800";
+  "rounded-lg border border-gray-300 px-6 py-3 font-semibold text-gray-800 hover:bg-gray-100";
 
 function GuestButtons() {
   return (
@@ -78,13 +78,13 @@ export default function HomePage() {
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-16">
       <section className="flex flex-col items-start gap-6">
-        <p className="rounded-full border border-gray-700 px-3 py-1 text-sm text-gray-400">
+        <p className="rounded-full border border-gray-300 px-3 py-1 text-sm text-gray-600">
           Freight booking across the USA
         </p>
         <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">
           Book a truck in minutes, not phone calls.
         </h1>
-        <p className="max-w-2xl text-lg text-gray-400">
+        <p className="max-w-2xl text-lg text-gray-600">
           CargoCadence uses an AI assistant to take your pickup and delivery details,
           quote a fair price instantly, and keep your booking moving from request to pickup.
         </p>
@@ -99,12 +99,12 @@ export default function HomePage() {
         <h2 className="text-2xl font-semibold">How it works</h2>
         <ol className="grid gap-4 sm:grid-cols-3">
           {STEPS.map((step, index) => (
-            <li key={step.title} className="rounded-lg border border-gray-700 p-5">
+            <li key={step.title} className="rounded-lg border border-gray-300 p-5">
               <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
                 {index + 1}
               </span>
               <h3 className="mb-1 font-semibold">{step.title}</h3>
-              <p className="text-sm text-gray-400">{step.text}</p>
+              <p className="text-sm text-gray-600">{step.text}</p>
             </li>
           ))}
         </ol>
@@ -114,9 +114,9 @@ export default function HomePage() {
         <h2 className="text-2xl font-semibold">Why CargoCadence</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {FEATURES.map((feature) => (
-            <div key={feature.title} className="rounded-lg border border-gray-700 p-5">
+            <div key={feature.title} className="rounded-lg border border-gray-300 p-5">
               <h3 className="mb-1 font-semibold">{feature.title}</h3>
-              <p className="text-sm text-gray-400">{feature.text}</p>
+              <p className="text-sm text-gray-600">{feature.text}</p>
             </div>
           ))}
         </div>
