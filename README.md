@@ -61,9 +61,10 @@ Names are listed in `.env.example`. Never commit `.env.local`.
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase -> API Keys | Public |
 | `SUPABASE_SECRET_KEY` | Supabase -> API Keys | **Server only.** Bypasses RLS. Used by the Stripe webhook, reminder route and rate limiter |
 | `GEMINI_API_KEY` | Google AI Studio | Server only |
-| `GEMINI_MODEL` | Google AI docs | Model names change often; check the docs |
+| `GEMINI_MODEL` | Google AI docs | Model names change often; check the docs. A fast "flash-lite" model gives the quickest replies. |
 | `GEMINI_FALLBACK_MODELS` | Google AI docs | Comma-separated, tried in order when the main model is busy or out of quota |
-| `ORS_API_KEY` | account.heigit.org | Road distance (truck profile) |
+| `GEMINI_THINKING_LEVEL` | Google AI docs | Optional. minimal, low, medium or high. low keeps replies fast. |
+| `ORS_API_KEY` | account.heigit.org | Road distance (truck profile). Calls api.heigit.org; the old api.openrouteservice.org was shut down. |
 | `STRIPE_SECRET_KEY` | Stripe -> Developers -> API keys | `sk_test_...` until go-live |
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook endpoint or `stripe listen` | `whsec_...` |
 | `NEXT_PUBLIC_SITE_URL` | Your site address | No trailing slash; used for Stripe redirects |
@@ -109,7 +110,7 @@ It needs a scheduler that calls it regularly. Options:
 3. Deploy, then set the Supabase Auth Site URL and redirect URLs to the production address.
 4. Create the production Stripe webhook (see above).
 5. Add the GitHub Actions secrets for reminders.
-6. Check Vercel's current plan terms: the Hobby plan is intended for non-commercial use.
+6. Check Vercel's current plan terms before running a commercial project on the Hobby plan.
 
 ## Pricing rules
 
